@@ -2,19 +2,24 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { TextInput,Button } from 'react-native'
 import { StyleSheet } from 'react-native'
+import Label from './label.js'
+import Input from './input.js'
 
 export default function Login({navigation}) {
   return (
     <View style={styles.container}
     >
       <Text style={styles.title} >LOGIN</Text>
-      <TextInput style={styles.input}
-        placeholder='username'
-      />
-      <TextInput style={styles.input}
-        placeholder='password'
-      />
-      <Button title="Submit" onPress={()=> navigation.replace('Dashboard')}></Button>
+      <View style={styles.row}>
+      <Label name='Username' />
+      <Input />
+      </View>
+      <View style={styles.row}>
+      <Label name='Password' />
+      <Input />
+      </View>
+
+      <Button style={styles.btn} title="Submit" onPress={()=> navigation.replace('Signup')}></Button>
     </View>
   )
 }
@@ -28,19 +33,23 @@ const styles=StyleSheet.create({
         paddingBottom:20
     },
     title: {
-    fontSize: 28,
-    marginBottom: 20,
-    fontWeight:'600'
+      fontSize: 28,
+      marginBottom: 20,
+      fontWeight:'600'
   },
-  input: {
-    width: '50%',
-    borderWidth: 5,
-    borderColor: '#0e0d0db4',
-    paddingBottom: 10,
-    paddingTop:10,
-    marginBottom: 10,
-    borderRadius: 15,
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '90%',
+    marginBottom: 15
   },
+  btn: {
+  marginTop: 20,
+  width: '80%',        
+  alignSelf: 'center' , 
+  marginLeft: 60
+  },
+  
 }
 
 );

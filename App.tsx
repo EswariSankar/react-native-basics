@@ -9,6 +9,7 @@ import { SafeAreaProvider, SafeAreaView, useSafeAreaInsets } from 'react-native-
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './src/components/login'; 
+import Signup from './src/components/signup'
 import Drawermenu from './src/components/drawer';
 
 
@@ -35,6 +36,8 @@ function AppContent() {
       <NavigationContainer>
         <Stack.Navigator initialRouteName='Login'>
           <Stack.Screen name='Login' component={Login} />
+          <Stack.Screen name='Signup' component={Signup} options={{ title: "Sign Up", headerTitleAlign: "center"}}
+  />
           <Stack.Screen name='Dashboard' component={Drawermenu} options={{headerShown:false}}/>
           
         </Stack.Navigator>
