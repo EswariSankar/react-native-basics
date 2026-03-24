@@ -1,30 +1,35 @@
+
+import React, { useState } from 'react' 
 import { StyleSheet, Text, View,TouchableOpacity ,Button} from 'react-native'
 import Label from './label'
 import Input from './input'
 import Dropdown from './dropdown'
-import React, { useState } from 'react' 
-import DateTimePicker from '@react-native-community/datetimepicker';
-import { Switch } from 'react-native';
-
+import { SafeAreaView } from 'react-native-safe-area-context';
+import CalenderPicker from './calender'
+import CustomSwitch from './CustomSwitch'
+import CustomButton from './CustomButton'
+import Loader from './Loader'
   
-
 
 const Signup = ({navigation}) => {
     const [date, setDate] = useState(new Date());
-    const [show, setShow] = useState(false);
+   
     const [maritalStatus, setMaritalStatus] = useState(null);
     const [age, setage] = useState(null);
     const[iseligible,setiseligible]=useState(false);
+    const [loading, setLoading] = useState(false);
 
-    const toggleSwitch = () => setiseligible(prev => !prev);
+    const handleRegister = () => {
+      setLoading(true);
 
-    const onChange = (event, selectedDate) => {
-        setShow(false);
-        if (selectedDate) {
-        setDate(selectedDate);
-        }
+      setTimeout(() => {
+        setLoading(false);
+        navigation.replace('Dashboard');
+      }, 2000);
     };
+    
 
+    
     const marital_data=[
       { label: 'Married', value: 'married' },
       {label:'Unmarried', value:'unmarried'}
@@ -35,28 +40,14 @@ const Signup = ({navigation}) => {
       {label:'Above 18',value:'Above 18'},
     ]
   return (
+    <SafeAreaView style={{ flex: 1 }}>
     <View style={styles.container}>
       <View style={styles.row}>
       <Label name='Name' />
       <Input />
-      </View>
-      <View style={styles.row}>
-      <Label name='DOB' />
-      <TouchableOpacity 
-          style={styles.dateBox}
-          onPress={() => setShow(true)}
-        >
-          <Text>{date.toDateString()}</Text>
-        </TouchableOpacity>
-        {show && (
-        <DateTimePicker
-          value={date}
-          mode="date"
-          display="default"
-          onChange={onChange}
-        />
-      )}
-      </View>
+      </View>  
+      <CalenderPicker label="DOB" date={date} setDate={setDate} />
+      
       <View style={styles.row}>
         <Label name='Marital Status'/>
         <Dropdown
@@ -75,27 +66,24 @@ const Signup = ({navigation}) => {
           placeholder='Select Age'
         />
       </View>
+      <CustomSwitch
+        label="Eligible to Vote"
+        value={iseligible}
+        onValueChange={() => setiseligible(prev => !prev)}
+      />
       <View style={styles.row}>
-        <Label name='Eligible to Vote' />
-
-        <View style={styles.switch}>
-          <Text>{iseligible ? "Yes" : "No"}</Text>
-
-          <Switch
-            value={iseligible}
-            onValueChange={toggleSwitch}
-            trackColor={{ false: "#ccc", true: "#4CAF50" }}
-          />
-        </View>
-      </View>
-      <View style={styles.row}>
-      <Label name='Mobile No.' />
-      <Input />
+        <Label name='Mobile No.' />
+        <Input />
       </View >
-      <View style={styles.btn}>
-      <Button  title="Finish" onPress={()=> navigation.replace('Dashboard')}></Button>
-      </View>
+      <CustomButton
+        title="Register" backgroundColor='purple'
+        onPress={handleRegister}
+        style={styles.btn}
+      />
+      <Loader visible={loading} />
+
     </View>
+    </SafeAreaView>
   )
 }
 
@@ -106,7 +94,7 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent:'flex-start',
         alignItems:'center',
-        paddingTop:50,
+        paddingTop:10,
         paddingBottom:20
     },
     row: {
@@ -115,26 +103,14 @@ const styles = StyleSheet.create({
     width: '90%',
     marginBottom: 15
   },
-  dateBox: {
-  flex: 1,
-  height: 40,
-  borderWidth: 1,
-  borderColor: '#0e0d0db4',
-  justifyContent: 'center',
-  paddingHorizontal: 10,
-  borderRadius: 15,
-  backgroundColor: '#fff'
-},
-switch: {
-  flex: 1,
-  flexDirection: 'row',
-  alignItems: 'center',
-  justifyContent: 'space-between'
-},
 btn: {
-  width: '90%',          
-  alignItems: 'flex-end', 
-  marginTop: 20
+  width: '30%',          
+  alignSelf: 'flex-end', 
+  marginTop: 20,
+  marginHorizontal:20
+},
+icon:{
+  fontSize:18
 }
     
 })

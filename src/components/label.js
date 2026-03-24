@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     fontWeight:'500',
     width: 110,
     marginRight: 10,
-    textAlignVertical: 'center',   // ✅ helps vertical alignment
-    includeFontPadding: false      // ✅ VERY IMPORTANT (Android fix)
+    textAlignVertical: 'center',   
+    includeFontPadding: false      
 }
 })
