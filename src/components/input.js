@@ -1,17 +1,21 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { TextInput } from 'react-native'
+import { StyleSheet, TextInput } from 'react-native';
+import React from 'react';
 
-const Input = () => {
+const Input = ({ value, onChangeText, placeholder }) => {
   return (
-    <TextInput style={styles.input}></TextInput>
-  )
-}
+    <TextInput
+      style={styles.input}
+      value={value}               // Controlled value from parent
+      onChangeText={onChangeText} // Updates parent state
+      placeholder={placeholder}   // Optional placeholder text
+    />
+  );
+};
 
-export default Input
+export default Input;
 
 const styles = StyleSheet.create({
-    input:{
+  input: {
     flex: 1,
     height: 40,
     borderWidth: 1,
@@ -19,7 +23,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingHorizontal: 10,
     borderRadius: 15,
-    textAlignVertical: 'center'   // ✅ centers text inside input
-}
-    
-})
+    textAlignVertical: 'center',
+  },
+});

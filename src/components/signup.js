@@ -1,6 +1,5 @@
-
-import React, { useState } from 'react' 
-import { StyleSheet, Text, View,TouchableOpacity ,Button} from 'react-native'
+import React, { useState, useEffect } from 'react' 
+import { StyleSheet, Text, View } from 'react-native'
 import Label from './label'
 import Input from './input'
 import Dropdown from './dropdown'
@@ -10,80 +9,106 @@ import CustomSwitch from './CustomSwitch'
 import CustomButton from './CustomButton'
 import Loader from './Loader'
 import FadeInView from './FadeInView'
-  
 
-const Signup = ({navigation}) => {
+const Signup = ({navigation, route}) => {
+    const randomUser = route.params?.randomUser; // Get random user from Login
+
     const [date, setDate] = useState(new Date());
-   
     const [maritalStatus, setMaritalStatus] = useState(null);
     const [age, setage] = useState(null);
-    const[iseligible,setiseligible]=useState(false);
+    const [iseligible, setiseligible] = useState(false);
     const [loading, setLoading] = useState(false);
+
+    // **New state for Name and Username**
+    const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
+
+    // Prefill Name & Username if Random User exists
+    useEffect(() => {
+        if (randomUser) {
+            setName(`${randomUser.name.first} ${randomUser.name.last}`);
+            setUsername(randomUser.login.username);
+        }
+    }, [randomUser]);
 
     const handleRegister = () => {
       setLoading(true);
 
       setTimeout(() => {
         setLoading(false);
-        navigation.replace('Dashboard');
+        // Pass the user info to Dashboard
+        navigation.replace('Dashboard', { user: { name, username } });
       }, 2000);
     };
-    
 
-    
-    const marital_data=[
+    const marital_data = [
       { label: 'Married', value: 'married' },
-      {label:'Unmarried', value:'unmarried'}
-    ]
+      { label: 'Unmarried', value: 'unmarried' }
+    ];
 
-    const age_data=[
-      {label:'Below 18',value:'below 18'},
-      {label:'Above 18',value:'Above 18'},
-    ]
+    const age_data = [
+      { label: 'Below 18', value: 'below 18' },
+      { label: 'Above 18', value: 'Above 18' },
+    ];
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
-    <FadeInView style={styles.container}>
-      <View style={styles.row}>
-        <Label name='Name' />
-        <Input />
-      </View>  
-      <CalenderPicker label="DOB" date={date} setDate={setDate} />
-      
-      <View style={styles.row}>
-        <Label name='Marital Status'/>
-        <Dropdown
-          data={marital_data}
-          value={maritalStatus}
-          setValue={setMaritalStatus}
-          placeholder='Select Status'
-        />
-      </View>
-      <View style={styles.row}>
-        <Label name='Age'/>
-        <Dropdown
-          data={age_data}
-          value={age}
-          setValue={setage}
-          placeholder='Select Age'
-        />
-      </View>
-      <CustomSwitch
-        label="Eligible to Vote"
-        value={iseligible}
-        onValueChange={() => setiseligible(prev => !prev)}
-      />
-      <View style={styles.row}>
-        <Label name='Mobile No.' />
-        <Input />
-      </View >
-      <CustomButton
-        title="Register" backgroundColor='purple'
-        onPress={handleRegister}
-        style={styles.btn}
-      />
-      <Loader visible={loading} />
+      <FadeInView style={styles.container}>
 
-    </FadeInView>
+        {/* Name field prefilled from Random User */}
+        <View style={styles.row}>
+          <Label name="Name" />
+          <Input value={name} onChangeText={setName} placeholder="Enter Name" />
+        </View>
+
+        {/* Username field */}
+        <View style={styles.row}>
+          <Label name="Username" />
+          <Input value={username} onChangeText={setUsername} placeholder="Enter Username" />
+        </View>
+
+        <CalenderPicker label="DOB" date={date} setDate={setDate} />
+
+        <View style={styles.row}>
+          <Label name='Marital Status'/>
+          <Dropdown
+            data={marital_data}
+            value={maritalStatus}
+            setValue={setMaritalStatus}
+            placeholder='Select Status'
+          />
+        </View>
+
+        <View style={styles.row}>
+          <Label name='Age'/>
+          <Dropdown
+            data={age_data}
+            value={age}
+            setValue={setage}
+            placeholder='Select Age'
+          />
+        </View>
+
+        <CustomSwitch
+          label="Eligible to Vote"
+          value={iseligible}
+          onValueChange={() => setiseligible(prev => !prev)}
+        />
+
+        <View style={styles.row}>
+          <Label name='Mobile No.' />
+          <Input />
+        </View>
+
+        <CustomButton
+          title="Register" 
+          backgroundColor='purple'
+          onPress={handleRegister}
+          style={styles.btn}
+        />
+        <Loader visible={loading} />
+
+      </FadeInView>
     </SafeAreaView>
   )
 }
@@ -99,19 +124,18 @@ const styles = StyleSheet.create({
         paddingBottom:20
     },
     row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '90%',
-    marginBottom: 15
-  },
-btn: {
-  width: '30%',          
-  alignSelf: 'flex-end', 
-  marginTop: 20,
-  marginHorizontal:20
-},
-icon:{
-  fontSize:18
-}
-    
+      flexDirection: 'row',
+      alignItems: 'center',
+      width: '90%',
+      marginBottom: 15
+    },
+    btn: {
+      width: '30%',          
+      alignSelf: 'flex-end', 
+      marginTop: 20,
+      marginHorizontal:20
+    },
+    icon:{
+      fontSize:18
+    }
 })
