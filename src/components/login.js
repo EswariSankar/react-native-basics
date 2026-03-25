@@ -6,6 +6,8 @@ import Label from './label.js'
 import Input from './input.js'
 import CustomButton from './CustomButton.js'
 import Loader from './Loader.js'
+import FadeInView from './FadeInView.js'
+import Icon from './Icon.js'
 
 export default function Login({navigation}) {
   const [loading, setLoading] = useState(false);
@@ -20,14 +22,15 @@ export default function Login({navigation}) {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-    <View style={styles.container}
-    >
+    <FadeInView style={styles.container}>
       <Text style={styles.title} >WELCOME</Text>
       <View style={styles.row}>
-      <Label name='Username' />
-      <Input />
+        <Icon name="person" size={24} color="gray" style={{ marginRight: 10 }} />
+        <Label name='Username' />
+        <Input />
       </View>
       <View style={styles.row}>
+        <Icon name="lock" size={24} color="gray" style={{ marginRight: 10 }} />
       <Label name='Password' />
       <Input />
       </View>
@@ -35,9 +38,8 @@ export default function Login({navigation}) {
         title="Login"
         onPress={handleLogin}
       />
-      <Loader visible={loading} />
-      
-    </View>
+      <Loader visible={loading} />        
+    </FadeInView>
   </SafeAreaView>
     
   )

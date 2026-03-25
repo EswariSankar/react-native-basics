@@ -9,6 +9,7 @@ import CalenderPicker from './calender'
 import CustomSwitch from './CustomSwitch'
 import CustomButton from './CustomButton'
 import Loader from './Loader'
+import FadeInView from './FadeInView'
   
 
 const Signup = ({navigation}) => {
@@ -41,10 +42,10 @@ const Signup = ({navigation}) => {
     ]
   return (
     <SafeAreaView style={{ flex: 1 }}>
-    <View style={styles.container}>
+    <FadeInView style={styles.container}>
       <View style={styles.row}>
-      <Label name='Name' />
-      <Input />
+        <Label name='Name' />
+        <Input />
       </View>  
       <CalenderPicker label="DOB" date={date} setDate={setDate} />
       
@@ -82,7 +83,7 @@ const Signup = ({navigation}) => {
       />
       <Loader visible={loading} />
 
-    </View>
+    </FadeInView>
     </SafeAreaView>
   )
 }

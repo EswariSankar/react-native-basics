@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Label from './label';
+import Icon from './Icon'
 const CalenderPicker = ({ label, date, setDate }) => {
   const [show, setShow] = useState(false);
 
@@ -17,7 +18,7 @@ const CalenderPicker = ({ label, date, setDate }) => {
       <Label name={label} />
       <TouchableOpacity style={styles.dateBox} onPress={() => setShow(true)}>
         <Text>{date.toDateString()}</Text>
-        <Text style={styles.icon}>🗓️</Text>
+        <Icon name="date-range" size={24} color="red" style={{ marginRight: 10 }} />
       </TouchableOpacity>
       {show && (
         <DateTimePicker

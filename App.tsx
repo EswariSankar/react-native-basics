@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './src/components/login';
 import Signup from './src/components/signup';
 import Drawermenu from './src/components/drawer';
+import SplashScreen from './src/components/SplashScreen';
 enableScreens();
 const Stack = createNativeStackNavigator();
 
@@ -17,8 +18,10 @@ function App() {
     <SafeAreaProvider>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} backgroundColor="#fff"  translucent={false} />
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login" 
+        <Stack.Navigator initialRouteName="SplashScreen"
           screenOptions={{
+
+            
           headerTitleAlign: "center",
           headerTitleStyle: {
             fontSize: 20,
@@ -26,6 +29,11 @@ function App() {
           }
         }}
         >
+          <Stack.Screen 
+            name="SplashScreen" 
+            component={SplashScreen} 
+            options={{ headerShown: false }} 
+          />
           <Stack.Screen 
             name="Login"
             component={Login}
