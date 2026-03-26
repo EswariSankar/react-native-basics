@@ -9,6 +9,7 @@ import CustomSwitch from './CustomSwitch'
 import CustomButton from './CustomButton'
 import Loader from './Loader'
 import FadeInView from './FadeInView'
+import Header from './Header'
 
 const Signup = ({navigation, route}) => {
     const randomUser = route.params?.randomUser; // Get random user from Login
@@ -18,16 +19,13 @@ const Signup = ({navigation, route}) => {
     const [age, setage] = useState(null);
     const [iseligible, setiseligible] = useState(false);
     const [loading, setLoading] = useState(false);
-
+    const [mobile, setMobile] = useState('');
     // **New state for Name and Username**
     const [name, setName] = useState('');
-    const [username, setUsername] = useState('');
-
     // Prefill Name & Username if Random User exists
     useEffect(() => {
         if (randomUser) {
             setName(`${randomUser.name.first} ${randomUser.name.last}`);
-            setUsername(randomUser.login.username);
         }
     }, [randomUser]);
 
@@ -37,7 +35,7 @@ const Signup = ({navigation, route}) => {
       setTimeout(() => {
         setLoading(false);
         // Pass the user info to Dashboard
-        navigation.replace('Dashboard', { user: { name, username } });
+        navigation.replace('Dashboard', { user: { name} });
       }, 2000);
     };
 
@@ -53,6 +51,8 @@ const Signup = ({navigation, route}) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <Header title="Signup" />
+
       <FadeInView style={styles.container}>
 
         {/* Name field prefilled from Random User */}
@@ -61,11 +61,7 @@ const Signup = ({navigation, route}) => {
           <Input value={name} onChangeText={setName} placeholder="Enter Name" />
         </View>
 
-        {/* Username field */}
-        <View style={styles.row}>
-          <Label name="Username" />
-          <Input value={username} onChangeText={setUsername} placeholder="Enter Username" />
-        </View>
+        
 
         <CalenderPicker label="DOB" date={date} setDate={setDate} />
 
@@ -97,7 +93,12 @@ const Signup = ({navigation, route}) => {
 
         <View style={styles.row}>
           <Label name='Mobile No.' />
-          <Input />
+          <Input
+            value={mobile}
+            onChangeText={setMobile}
+            placeholder="Enter Mobile Number"
+            keyboardType="phone-pad" // optional, shows numeric keyboard
+          />
         </View>
 
         <CustomButton

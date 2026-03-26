@@ -5,9 +5,9 @@ const Input = ({ value, onChangeText, placeholder }) => {
   return (
     <TextInput
       style={styles.input}
-      value={value}               // Controlled value from parent
-      onChangeText={onChangeText} // Updates parent state
-      placeholder={placeholder}   // Optional placeholder text
+      value={value}               
+      onChangeText={onChangeText} 
+      placeholder={placeholder}   
     />
   );
 };

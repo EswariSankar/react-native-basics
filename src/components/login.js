@@ -8,11 +8,13 @@ import CustomButton from './CustomButton.js';
 import Loader from './Loader.js';
 import FadeInView from './FadeInView.js';
 import Icon from './Icon.js';
+import Header from './Header.js'
 import { getRandomUsers } from '../api/randomUserApi.js'; // import the API function
 
 export default function Login({ navigation }) {
   const [loading, setLoading] = useState(false);
-
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   // **Updated handleLogin function**
   const handleLogin = async () => {
     setLoading(true);
@@ -22,9 +24,20 @@ export default function Login({ navigation }) {
         const user = users[0];
         setLoading(false);
         // Optional alert to show fetched user
-        Alert.alert(`Random User: ${user.name.first} ${user.name.last}`);
-        // Navigate to Signup with pre-filled random user
-        navigation.replace('Signup', { randomUser: user });
+        Alert.alert(
+          'Random User',
+          `Random User: ${user.name.first} ${user.name.last}`,
+          [
+            {
+              text: 'OK',
+              onPress: () => {
+                // Navigate to Signup after alert is dismissed
+                navigation.replace('Signup', { randomUser: user });
+              },
+            },
+          ],
+          { cancelable: false } // prevents dismissing by tapping outside
+        );
       } else {
         setLoading(false);
         Alert.alert('Failed to fetch random user');
@@ -37,19 +50,27 @@ export default function Login({ navigation }) {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <Header title="Login" />
       <FadeInView style={styles.container}>
+        
         <Text style={styles.title}>WELCOME</Text>
 
         {/* You can remove these username/password fields if you want */}
         <View style={styles.row}>
           <Icon name="person" size={24} color="gray" style={{ marginRight: 10 }} />
           <Label name="Username" />
-          <Input />
+          <Input
+            value={username}
+            onChangeText={setUsername} 
+          />
         </View>
         <View style={styles.row}>
           <Icon name="lock" size={24} color="gray" style={{ marginRight: 10 }} />
           <Label name="Password" />
-          <Input />
+          <Input 
+            value={password}
+            onChangeText={setPassword}
+          />
         </View>
 
         {/* Login button now uses Random User API */}

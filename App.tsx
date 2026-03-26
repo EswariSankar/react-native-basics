@@ -37,12 +37,12 @@ function App() {
           <Stack.Screen 
             name="Login"
             component={Login}
-            options={{title:'LOGIN',headerTitleAlign: "center"}}
+            options={{headerShown:false}}
             />
           <Stack.Screen 
             name="Signup" 
             component={Signup} 
-            options={{ title: "SIGNUP", headerTitleAlign: "center" }} 
+            options={{ headerShown:false }} 
           />
           <Stack.Screen 
             name="Dashboard" 
