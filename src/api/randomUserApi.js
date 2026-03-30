@@ -10,3 +10,4 @@ export const getRandomUsers = async (count = 1) => {
     return [];
   }
 };
+

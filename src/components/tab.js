@@ -1,9 +1,9 @@
 import React from 'react';
-import { Text, Button } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Dashboard from './dashboard';
 import History from './history';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -18,7 +18,14 @@ function DashboardStack({ navigation }) {
         options={{
           title: 'Dashboard',
           headerLeft: () => (
-            <Button title="☰" onPress={() => navigation.toggleDrawer()} />
+            
+            <Icon.Button
+              name="menu"
+              size={25}
+              backgroundColor="transparent"
+              color="black"
+              onPress={() => navigation.toggleDrawer()} 
+            />
           ),
         }}
       />
@@ -36,7 +43,13 @@ function HistoryStack({ navigation }) {
         options={{
           title: 'History',
           headerLeft: () => (
-            <Button title="☰" onPress={() => navigation.toggleDrawer()} />
+            <Icon.Button
+              name="menu"
+              size={25}
+              backgroundColor="transparent"
+              color="black"
+              onPress={() => navigation.toggleDrawer()}
+            />
           ),
         }}
       />
@@ -47,28 +60,37 @@ function HistoryStack({ navigation }) {
 export default function Tabs() {
   return (
     <Tab.Navigator
-      screenOptions={{
+      screenOptions={({ route }) => ({
         headerShown: false,
         tabBarActiveTintColor: 'darkred',
         tabBarInactiveTintColor: 'gray',
-      }}
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === 'DashboardTab') {
+            iconName = focused ? 'home' : 'home-outline';
+          } else if (route.name === 'HistoryTab') {
+            iconName = focused ? 'time' : 'time-outline';
+          }
+
+          return <Icon name={iconName} size={size} color={color} />;
+        },
+        tabBarLabelStyle: { fontSize: 12 },
+      })}
     >
       <Tab.Screen
         name="DashboardTab"
         component={DashboardStack}
         options={{
-          tabBarLabel: ({ color }) => (
-            <Text style={{ color, fontSize: 18 }}>🏠 Dashboard</Text>
-          ),
+          tabBarLabel: 'Dashboard'
+          
         }}
       />
       <Tab.Screen
         name="HistoryTab"
         component={HistoryStack}
         options={{
-          tabBarLabel: ({ color }) => (
-            <Text style={{ color, fontSize: 18 }}>⏱️ History</Text>
-          ),
+          tabBarLabel:  'History'
         }}
       />
     </Tab.Navigator>

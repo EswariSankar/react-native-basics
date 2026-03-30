@@ -76,7 +76,7 @@ export default function Login({ navigation }) {
         {/* Login button now uses Random User API */}
         <CustomButton
           style={styles.btn}
-          backgroundColor="red"
+          backgroundColor="rgb(129, 53, 190)"
           title="Login"
           onPress={handleLogin}
         />
@@ -93,7 +93,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 20,
-    paddingBottom: 20
+    paddingBottom: 20,
+    backgroundColor:"#c5a0f8"
   },
   title: {
     fontSize: 28,
