@@ -5,7 +5,7 @@ import {
 } from "react-native";
 import api from "../api/api";
 
-export default function Dashboard({ navigation, token }) {
+export default function Dashboard() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

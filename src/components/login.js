@@ -69,7 +69,7 @@ export default function Login({ navigation }) {
           <Input
             value={username}
             onChangeText={setUsername}
-            placeholder="Enter username"
+            
           />
         </View>
 
@@ -79,7 +79,6 @@ export default function Login({ navigation }) {
           <Input
             value={password}
             onChangeText={setPassword}
-            placeholder="Enter password"
             secureTextEntry={true}
           />
         </View>
