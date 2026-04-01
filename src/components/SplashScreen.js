@@ -3,45 +3,37 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 import FadeInView from './FadeInView';
 import ZoomInView from './ZoomInView';
 
-export default function SplashScreen({ navigation }) {
-
+export default function SplashScreen() {
   const [showText, setShowText] = useState(false);
 
   useEffect(() => {
-    // Step 1: Show text after 1.2 sec
-    setTimeout(() => {
+    const textTimer = setTimeout(() => {
       setShowText(true);
     }, 1200);
 
-    // Step 2: Navigate after 2.5 sec
-    setTimeout(() => {
-      navigation.replace('Login');
-    }, 3800);
+    // ✅ No navigation here — App.tsx handles it automatically
+    return () => clearTimeout(textTimer);
   }, []);
 
   return (
     <View style={styles.container}>
-      
-      {/* Logo Animation */}
       <FadeInView>
         <ZoomInView>
-          <Image 
-            source={require('../assets/logo.jpg')} 
+          <Image
+            source={require('../assets/logo.jpg')}
             style={styles.logo}
           />
         </ZoomInView>
       </FadeInView>
 
-      {/* Text Animation (appears later) */}
       {showText && (
         <FadeInView>
-        <ZoomInView>
-          <Text style={styles.title}>VOTEX</Text>
-          <Text style={styles.subtitle}>Welcome!</Text>
-        </ZoomInView>
+          <ZoomInView>
+            <Text style={styles.title}>VOTEX</Text>
+            <Text style={styles.subtitle}>Welcome!</Text>
+          </ZoomInView>
         </FadeInView>
       )}
-
     </View>
   );
 }
